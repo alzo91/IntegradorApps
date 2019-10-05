@@ -10,7 +10,16 @@ class DeviceController {
   }
 
   async show(req, res) {
-    return res.status(200).json({ mesage: 'Details about a specified device' });
+    const { id } = req.params;
+    const device = await Device.findByPk(id);
+
+    if (!device) {
+      return res
+        .status(400)
+        .json({ mesage: `ID ${id} doesn't found in databases!` });
+    }
+
+    return res.status(200).json(device);
   }
 
   async store(req, res) {
