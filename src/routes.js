@@ -6,7 +6,8 @@ import configMulter from './config/multer';
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import ApplicationController from './app/controllers/ApplicationController';
-
+import FileController from './app/controllers/FileController';
+import UserAvatarController from './app/controllers/UserAvatarController';
 import MiddlewareAuth from './app/middlewares/auth';
 
 const routes = new Router();
@@ -16,16 +17,6 @@ routes.get('/', (req, res) =>
   res.status(200).json({ msg: `server: ${new Date().getDate().toString()}` })
 );
 
-routes.post('/files', upload.single('file'), (req, res) => {
-  if (!req.file) {
-    return res
-      .status(401)
-      .json({ error: `The request didn't recive your image!` });
-  }
-  const { filename, originalname, size } = req.file;
-
-  return res.status(200).json({ filename, originalname, size });
-});
 /** Criando usuário */
 routes.post('/CreateUser', UserController.store);
 
@@ -43,6 +34,17 @@ routes.post('/Users/:id', MiddlewareAuth.index, UserController.show);
 
 /** Delte um único usário */
 routes.post('/DestroyUser/:id', MiddlewareAuth.index, UserController.delete);
+
+/** Atualizando um único usário */
+routes.post(
+  '/UserAvatar',
+  MiddlewareAuth.index,
+  upload.single('file'),
+  UserAvatarController.update
+);
+
+/** Permite o usuário adicionar uma foto/imagem */
+routes.post('/files', upload.single('file'), FileController.store);
 
 /** Rotas para inserção / consulta / deleção de Aplicativos */
 /** Lista de aplicativos criados */

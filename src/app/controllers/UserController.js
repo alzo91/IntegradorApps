@@ -1,4 +1,5 @@
 import User from '../models/User';
+import File from '../models/File';
 
 class UserController {
   /** methodo para listar todos os objetos daentidade */
@@ -22,7 +23,12 @@ class UserController {
       return res.status(401).json({ error: 'Favor informar ID do Usuário!' });
     }
 
-    const user = await User.findByPk(req.params.id);
+    // const user = await User.findByPk(req.params.id);
+    // include: [{ model: Application, attributes: ['name', 'description'] }],
+    const user = await User.findOne({
+      where: { id: req.params.id },
+      include: [{ model: File, attributes: ['name', 'path', 'url'] }],
+    });
 
     if (!user) {
       return res.status(401).json({
@@ -65,7 +71,9 @@ class UserController {
   }
 
   update(req, res) {
-    return res.status(200);
+    return res
+      .status(200)
+      .json({ erro: `This method doesn't return nothing yet!` });
   }
 
   async delete(req, res) {

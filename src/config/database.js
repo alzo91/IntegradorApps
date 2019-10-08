@@ -1,3 +1,7 @@
+require('dotenv/config');
+
+// console.log(process.env.DB_HOST);
+
 module.exports = {
   dialect: 'postgres', // 'mysql',
   username: process.env.DB_USER,
