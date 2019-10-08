@@ -1,6 +1,6 @@
 export default {
   secret: '5e62f6d60541eb3c8506917dfd9edb1b',
-  ttl: '5 days',
+  ttl: '7 days',
 };
 
 /**

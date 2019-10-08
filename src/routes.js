@@ -1,4 +1,7 @@
 import { Router } from 'express';
+import multer from 'multer';
+
+import configMulter from './config/multer';
 
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
@@ -7,11 +10,22 @@ import ApplicationController from './app/controllers/ApplicationController';
 import MiddlewareAuth from './app/middlewares/auth';
 
 const routes = new Router();
+const upload = multer(configMulter);
 
 routes.get('/', (req, res) =>
   res.status(200).json({ msg: `server: ${new Date().getDate().toString()}` })
 );
 
+routes.post('/files', upload.single('file'), (req, res) => {
+  if (!req.file) {
+    return res
+      .status(401)
+      .json({ error: `The request didn't recive your image!` });
+  }
+  const { filename, originalname, size } = req.file;
+
+  return res.status(200).json({ filename, originalname, size });
+});
 /** Criando usuário */
 routes.post('/CreateUser', UserController.store);
 
