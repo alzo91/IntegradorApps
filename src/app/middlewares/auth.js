@@ -15,7 +15,7 @@ class Auth {
       const decode = await promisify(jwt.verify)(token, authConf.secret);
       req.userId = decode.userId;
       req.userEmail = decode.userEmail;
-      req.userManager = decode.manager;
+      req.userManager = decode.userManager;
 
       return next();
     } catch (err) {

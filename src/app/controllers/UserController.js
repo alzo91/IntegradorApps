@@ -6,7 +6,9 @@ class UserController {
   async index(req, res) {
     const users = await User.findAll({
       attributes: ['id', 'name', 'email', 'manager', 'blocked', 'creation_dt'],
+      order: ['id'],
     });
+
     if (!users) {
       return res
         .status(401)
