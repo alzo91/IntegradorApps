@@ -14,7 +14,10 @@ const routes = new Router();
 const upload = multer(configMulter);
 
 routes.get('/', (req, res) =>
-  res.status(200).json({ msg: `server: ${new Date().getDate().toString()}` })
+  res.status(200).json({
+    msg: `server: ${new Date().getDate().toString()}`,
+    teste: 'git for app.buddy.works v1',
+  })
 );
 
 /** Criando usuário */
