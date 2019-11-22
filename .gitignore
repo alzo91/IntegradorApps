@@ -4,6 +4,9 @@
 ## Arquivos das dependencias do node
 /node_modules
 
+## Arquivos de distribuição
+/dist
+
 ## cache das dependencias
 yarn.lock
 
