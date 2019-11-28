@@ -14,6 +14,7 @@ class User extends Model {
         password_hash: Sequelize.STRING,
         manager: Sequelize.BOOLEAN,
         blocked: Sequelize.BOOLEAN,
+        verify_access: Sequelize.BOOLEAN,
         password: Sequelize.VIRTUAL,
         creation_dt: {
           type: Sequelize.VIRTUAL,

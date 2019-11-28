@@ -67,6 +67,8 @@ class UserController {
       return res.status(401).json({ error: `Usuário já está cadastrado!` });
     }
 
+    console.log(req.body);
+
     const user = await User.create(req.body);
 
     return res.status(200).json(user);

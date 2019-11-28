@@ -8,6 +8,8 @@ import SessionController from './app/controllers/SessionController';
 import ApplicationController from './app/controllers/ApplicationController';
 import FileController from './app/controllers/FileController';
 import UserAvatarController from './app/controllers/UserAvatarController';
+import ChkUserController from './app/controllers/ChkUserControler';
+
 import MiddlewareAuth from './app/middlewares/auth';
 
 const routes = new Router();
@@ -37,6 +39,8 @@ routes.post('/Users/:id', MiddlewareAuth.index, UserController.show);
 
 /** Delte um único usário */
 routes.post('/DestroyUser/:id', MiddlewareAuth.index, UserController.delete);
+
+routes.get('/ChkUsers', MiddlewareAuth.index, ChkUserController.index);
 
 /** Atualizando um único usário */
 routes.post(
