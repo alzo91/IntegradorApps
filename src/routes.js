@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
-import mtz from 'moment-timezone'
+import mtz from 'moment-timezone';
 import configMulter from './config/multer';
 
 import UserController from './app/controllers/UserController';
@@ -15,13 +15,15 @@ import MiddlewareAuth from './app/middlewares/auth';
 const routes = new Router();
 const upload = multer(configMulter);
 
-routes.get('/', (req, res) =>{
-  let dtNow = mtz(new Date()).tz('America/Sao_Paulo').format('YYYY-MM-DD HH:mm');
+routes.get('/', (req, res) => {
+  const dtNow = mtz(new Date())
+    .tz('America/Sao_Paulo')
+    .format('YYYY-MM-DD HH:mm');
   res.status(200).json({
     msg: `server: ${dtNow}`,
     buddy_works: 'It was configured!',
-  })
-}
+  });
+});
 
 /** Criando usuário */
 routes.post('/CreateUser', UserController.store);
