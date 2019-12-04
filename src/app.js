@@ -17,6 +17,14 @@ class App {
   middlewares() {
     this.server.use(express.json());
     this.server.use(cors({ origin: false, optionsSuccessStatus: 200 }));
+    this.server.use((req, res, next) => {
+      res.header('Access-Control-Allow-Origin', '*');
+      res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept'
+      );
+      next();
+    });
     this.server.use(
       '/files',
       express.static(resolve(__dirname, '..', 'tmp', 'uploads'))
