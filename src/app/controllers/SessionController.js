@@ -16,7 +16,7 @@ class SessionController {
         .json({ error: `Email < ${email}> wasn't registered ` });
     }
 
-    if (!user.checkPassword(password)) {
+    if (!(await user.checkPassword(password))) {
       return res.status(401).json({ error: 'The password is incorrect!' });
     }
 
