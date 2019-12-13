@@ -22,15 +22,15 @@ class App {
       //
       // res.header("Access-Control-Allow-Origin", "*");
       res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT');
+      res.header('Access-Control-Allow-Headers', '*');
       res.header(
-        'Access-Control-Allow-Headers',
         'Origin, X-Requested-With, Content-Type, Accept, Authorization'
       );
       //
-      res.header(
+      /* res.header(
         'Access-Control-Allow-Headers',
         'Origin, X-Requested-With, Content-Type, Accept'
-      );
+      ); */
       next();
     });
     this.server.use(
