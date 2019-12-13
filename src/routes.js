@@ -25,7 +25,7 @@ routes.get('/', (req, res) => {
   });
 });
 
-routes.post('CheckToken', MiddlewareAuth.show);
+routes.post('/CheckToken', MiddlewareAuth.show);
 
 /** Criando usuário */
 routes.post('/CreateUser', UserController.store);

@@ -10,7 +10,7 @@ class Auth {
       return res.status(400).json({ error: 'token not provided' });
 
     const [, token] = authHearder.split(' ');
-
+    console.log(`we are going check the token... You have waite.. `);
     try {
       const decode = await promisify(jwt.verify)(token, authConf.secret);
 
