@@ -32,7 +32,7 @@ class User extends Model {
 
     this.belongsTo(sequelize.models.File, { foreignKey: 'avatar_id' });
     // this.hasOne(sequelize.models.File, { foreignKey: 'avatar_id' });
-    // this.hasMany(sequelize.models.File, { foreignKey: 'avatar_id' });
+    // this.hasMany(sequelize.models.Application, { foreignKey: 'user_id' });
 
     this.addHook('beforeSave', async user => {
       if (user.password) {

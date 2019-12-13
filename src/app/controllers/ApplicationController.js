@@ -1,4 +1,5 @@
 import Application from '../models/Application';
+import User from '../models/User';
 
 class ApplicationController {
   /** methodo para listar todos os objetos daentidade */
@@ -10,7 +11,15 @@ class ApplicationController {
         .json({ mesge: `You haven't permission for insert aplications` });
     }
 
-    const applications = await Application.findAll({ order: [['id']] });
+    const applications = await Application.findAll({
+      where: {
+        user_id: req.userId,
+      },
+      order: [['id']],
+      include: [{ model: User, attributes: ['name', 'email'] }],
+      attributes: ['id', 'creation_dt', 'name', 'description', 'update_dt'],
+    });
+
     return res.status(200).json(applications);
   }
 
@@ -22,7 +31,20 @@ class ApplicationController {
         .json({ mesge: `You haven't permission for insert aplications` });
     }
 
-    const application = await Application.findByPk(req.params.AppId);
+    // const application = await Application.findByPk(req.params.AppId);
+    const application = await Application.findOne({
+      where: {
+        user_id: req.userId,
+        id: req.params.AppId,
+      },
+      // include: [{ model: File, attributes: ['name', 'path', 'url'] }],
+      include: [{ model: User, attributes: ['name', 'email'] }],
+      attributes: ['id', 'creation_dt', 'name', 'description', 'update_dt'],
+    });
+
+    if (!application) {
+      return res.status(409).json({ error: 'This app does not owner for you' });
+    }
     return res.status(200).json(application);
   }
 
@@ -51,7 +73,7 @@ class ApplicationController {
       });
     }
 
-    app = await Application.create({ name, description });
+    app = await Application.create({ name, description, user_id: req.userId });
 
     return res.status(200).json(app);
   }
@@ -71,7 +93,9 @@ class ApplicationController {
         .statu(401)
         .json({ error: 'You should inform the field < id and description>!' });
     }
-    const app = await Application.findByPk(id);
+    const app = await Application.findOne({
+      where: { id, user_id: req.userId },
+    });
 
     if (!app) {
       return res.status(401).json({
@@ -102,7 +126,9 @@ class ApplicationController {
         .json({ error: 'You should inform the field how parameters!' });
     }
 
-    const app = await Application.findByPk(id);
+    const app = await Application.findOne({
+      where: { id, user_id: req.userId },
+    });
 
     if (!app) {
       return res.status(401).json({
