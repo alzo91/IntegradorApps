@@ -15,21 +15,6 @@ import MiddlewareAuth from './app/middlewares/auth';
 const routes = new Router();
 const upload = multer(configMulter);
 
-/*
-const middHeaders = (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
-  return next();
-}; */
-
 routes.get('/', (req, res) => {
   const dtNow = mtz(new Date())
     .tz('America/Sao_Paulo')
@@ -39,6 +24,8 @@ routes.get('/', (req, res) => {
     buddy_works: 'It was configured!',
   });
 });
+
+routes.post('CheckToken', MiddlewareAuth.show);
 
 /** Criando usuário */
 routes.post('/CreateUser', UserController.store);
